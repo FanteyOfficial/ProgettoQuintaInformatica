@@ -13,4 +13,3 @@
 - [ ] Salvataggio dei messaggi importanti
 - [ ] Ricerca di uno o più messaggi attraverso una parola chiave
 - [ ] Ricerca di un contatto attraverso una parola chiave
-- [ ] 
