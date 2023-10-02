@@ -20,6 +20,5 @@
 - [ ] Visualizzazione da parte del mittente se il destinatario ha visualizzato il messaggio
 - [ ] Visualizzazione orario di invio del messaggio
 - [ ] Visualizzazione stato online o ultimo accesso dell'utente
-- [ ] Possibilità di mettere e togliere una reazione tramite emoji al messaggio
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
 - [ ] Rinominazione utente salvato nella propria "rubrica"
