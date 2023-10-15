@@ -22,3 +22,6 @@
 - [ ] Visualizzazione stato online o ultimo accesso dell'utente
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
 - [ ] Rinominazione utente salvato nella propria "rubrica"
+
+## ER
+![Screenshot](screenshot.png)
