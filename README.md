@@ -30,4 +30,4 @@
 - Utente (<b>mail</b>, <b>id_utente</b>, nome, cognome, username, password, ultimoAccesso, stato)
 - Contatto (<b>mail</b>, <b>id_contatto</b>, nome, cognome, username, is_online, stato)
 - Chat (<b>id_chat</b>, id_utente, id_contatto)
-- Messaggio (<b>id</b>, contenuto, id_chat, letto, consegnato, dataInvio, orarioInvio)
+- Messaggio (<b>id</b>, contenuto, id_chat, letto, consegnato, dataInvio, orarioInvio, eliminato)
