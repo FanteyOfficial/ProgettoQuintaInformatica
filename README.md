@@ -23,6 +23,14 @@
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
 - [ ] Rinominazione utente salvato nella propria "rubrica"
 ---
+## Assunzioni
+- Si assume che ogni utente può avere 0 o più contatti.
+- Si assume che ogni chat sia posseduta da 2 o più utenti.
+- Si assume che ogni utente possa avere 0 o più chat.
+- Si assume che ogni chat abbia 0 o più messaggi.
+- Si assume che ogni messaggio abbia 1 e 1 sola chat.
+- Si assume che ogni chat può avere 0 o più utenti.
+---
 ## ER
 ![Screenshot](ER.png)
 ---
