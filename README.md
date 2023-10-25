@@ -36,3 +36,7 @@
 ---
 ## Schema logico relazionale
 ![Screenshot](SchemaLogicoRelazionale.PNG)
+
+## MockUp
+### (preso da WhatsApp Desktop)
+![Screenshot](Slide1.png)
