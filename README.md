@@ -32,7 +32,7 @@
 - Si assume che ogni chat può avere 0 o più utenti.
 ---
 ## ER
-![Screenshot](ER.png)
+![Screenshot](ERChatApp.png)
 ---
 ## Schema relazionale
 - Utente (<b>mail</b>, <b>id_utente</b>, nome, cognome, username, password, ultimoAccesso, stato)
