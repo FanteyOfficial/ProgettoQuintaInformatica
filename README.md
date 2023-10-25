@@ -39,4 +39,4 @@
 
 ## MockUp
 ### (preso da WhatsApp Desktop)
-![Screenshot](Slide1.png)
+![Screenshot](Slide1.jpg)
