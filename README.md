@@ -24,7 +24,7 @@
 - [ ] Rinominazione utente salvato nella propria "rubrica"
 ---
 ## Assunzioni
-- Si assume che ogni utente può avere 0 o più contatti.
+- Si assume che ogni utente per avere un contatto deve condividere almeno una chat con esso.
 - Si assume che ogni chat sia posseduta da 2 o più utenti.
 - Si assume che ogni utente possa avere 0 o più chat.
 - Si assume che ogni chat abbia 0 o più messaggi.
