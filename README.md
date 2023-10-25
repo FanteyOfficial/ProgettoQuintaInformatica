@@ -35,4 +35,4 @@
 ![Screenshot](ERChatApp.png)
 ---
 ## Schema relazionale
-![Screenshot](SchemaLogicoRelazionale.png)
+![Screenshot](SchemaLogicoRelazionale.PNG)
