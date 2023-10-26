@@ -39,5 +39,5 @@
 
 ## MockUp
 ![Screenshot](Slide1.jpg)
-![Screenshot](Slide2.jpg)
-![Screenshot](Slide3.jpg)
+![Screenshot](Slide2.PNG)
+![Screenshot](Slide3.PNG)
