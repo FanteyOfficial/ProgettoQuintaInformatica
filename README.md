@@ -38,5 +38,6 @@
 ![Screenshot](SchemaLogicoRelazionale.PNG)
 
 ## MockUp
-### (preso da WhatsApp Desktop)
 ![Screenshot](Slide1.jpg)
+![Screenshot](Slide2.jpg)
+![Screenshot](Slide3.jpg)
