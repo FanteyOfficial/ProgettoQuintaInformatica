@@ -36,6 +36,10 @@
 ---
 ## Schema logico relazionale
 ![Screenshot](SchemaLogicoRelazionale.PNG)
+---
+
+## Schema relazionale
+![Screenshot](SchemaRelazionale.png)
 
 ## MockUp
 ![Screenshot](Slide1.jpg)
