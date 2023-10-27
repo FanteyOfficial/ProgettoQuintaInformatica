@@ -1,7 +1,8 @@
 # ProgettoQuintaInformatica
 
 ### Problema: Comunicazione a distanza.
-### Descrizione: WebApp di messaggistica istantanea (ispirato a WhatsApp e Telegram).
+### Descrizione:
+#### WebApp di messaggistica istantanea (ispirato a WhatsApp e Telegram).
 ---
 ## Funzionalità:
 - [ ] Registrazione e accesso di un account utente (registrazione tramite mail)
