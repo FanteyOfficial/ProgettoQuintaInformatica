@@ -13,7 +13,6 @@
 - [ ] Eliminazione di un messaggio dalla conversazione
 - [ ] Eliminazione di una conversazione
 - [ ] Modifica di un messaggio inviato
-- [ ] Salvataggio dei messaggi importanti
 - [ ] Ricerca di uno o più messaggi attraverso una parola chiave
 - [ ] Ricerca di un contatto attraverso una parola chiave
 - [ ] Visualizzazione dei messaggi inviati e ricevuti dall'utente
