@@ -30,6 +30,8 @@
 - Si assume che ogni chat abbia 0 o più messaggi.
 - Si assume che ogni messaggio abbia 1 e 1 sola chat.
 - Si assume che ogni chat può avere 0 o più utenti.
+- Si assume che ogni rubrica abbia 1 e un solo utente.
+- Si assume che ogni utente può avere 1 e una sola rubrica.
 - Si assume che il tag_univoco corrisponda all'id_utente.
 ---
 ## ER
