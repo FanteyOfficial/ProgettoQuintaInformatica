@@ -35,16 +35,16 @@
 - Si assume che il tag_univoco corrisponda all'id_utente.
 ---
 ## ER
-![Screenshot](ERChatApp.png)
+![Screenshot](./Readme/ERChatApp.png)
 ---
 ## Schema logico relazionale
-![Screenshot](SchemaLogicoRelazionale.PNG)
+![Screenshot](./Readme/SchemaLogicoRelazionale.PNG)
 ---
 
 ## Schema relazionale
-![Screenshot](SchemaRelazionale.png)
+![Screenshot](./Readme/SchemaRelazionale.png)
 
 ## MockUp
-![Screenshot](Slide1.jpg)
-![Screenshot](Slide2.PNG)
-![Screenshot](Slide3.PNG)
+![Screenshot](./Slide1.jpg)
+![Screenshot](./Slide2.PNG)
+![Screenshot](./Slide3.PNG)
