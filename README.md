@@ -25,6 +25,7 @@
 ---
 ## Assunzioni
 - Si assume che ogni utente per avere un contatto deve condividere almeno una chat con esso.
+- Si assume che la mail e la username associata all'account dell'utente siano univoci, ma NON chiavi primarie.
 - Si assume che ogni chat sia posseduta da 2 o più utenti.
 - Si assume che ogni utente possa avere 0 o più chat.
 - Si assume che ogni chat abbia 0 o più messaggi.
