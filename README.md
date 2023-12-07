@@ -45,9 +45,9 @@
 ![Screenshot](./Readme/SchemaRelazionale.png)
 
 ## MockUp
-![Screenshot](./Slide1.jpg)
-![Screenshot](./Slide2.PNG)
-![Screenshot](./Slide3.PNG)
+![Screenshot](./Readme/Slide1.jpg)
+![Screenshot](./Readme/Slide2.PNG)
+![Screenshot](./Readme/Slide3.PNG)
 
 ## Queries per creazione tabelle
 ```sql
