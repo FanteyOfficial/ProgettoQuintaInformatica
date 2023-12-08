@@ -1,5 +1,7 @@
+<?php include 'config.php'; ?>
+
 <?php
 
-echo "Hello World!";
+    header("Location: home.php");
 
 ?>
