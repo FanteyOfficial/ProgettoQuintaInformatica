@@ -16,7 +16,15 @@
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
-    <p>Hello, <?php echo $_SESSION['id_utente']; ?>!</p>
+    <?php
+        $sql = "SELECT * FROM Utenti WHERE id_utente = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_SESSION['id_utente']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    ?>
+    <p>Hello, <?php echo $row['username']; ?>!</p>
     <a href="logout.php">Logout</a>
 </body>
 </html>

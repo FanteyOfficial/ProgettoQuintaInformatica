@@ -26,17 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $storedPassword = $row['password'];
         $salt = $row['salt'];
-        $hashedPasswordAttempt = password_hash($password . $salt, PASSWORD_DEFAULT);
+        $userEnteredPassword = $_POST['password'];
 
-        if (password_verify($hashedPasswordAttempt, $storedPassword)) {
+        if (password_verify($userEnteredPassword . $salt, $storedPassword)) {
             $_SESSION['id_utente'] = $row['id_utente'];
             header("Location: home.php");
             exit();
         } else {
-            echo "Invalid email or password1.";
+            echo "Invalid email or password.";
         }
     } else {
-        echo "Invalid email or password.";
+        echo "Non ho trovato nessun account con questa mail.";
     }
 
     $stmt->close();
