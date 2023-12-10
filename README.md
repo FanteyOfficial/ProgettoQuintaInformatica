@@ -5,7 +5,7 @@
 #### WebApp di messaggistica istantanea (ispirato a WhatsApp e Telegram).
 ---
 ## Funzionalità:
-- [ ] Registrazione e accesso di un account utente (registrazione tramite mail)
+- [x] Registrazione e accesso di un account utente (registrazione tramite mail)
 - [ ] Modifica dati di un utente
 - [ ] Eliminazione di un account utente
 - [ ] Visualizzazione utenti con cui poter interagire (Nome utente + tag univoco)
