@@ -5,3 +5,5 @@
     header("Location: home.php");
 
 ?>
+
+<?php $conn->close(); ?>

@@ -8,8 +8,8 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html5>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>

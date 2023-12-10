@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: home.php");
             exit();
         } else {
-            echo "Invalid email or password.";
+            $failed = "Invalid email or password.";
         }
     } else {
-        echo "Non ho trovato nessun account con questa mail.";
+        $failed = "Non ho trovato nessun account con questa mail.";
     }
 
     $stmt->close();
@@ -52,19 +52,27 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link type="text/css" rel="stylesheet" href="css/shared-login.css" />
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post" action="login.php">
-        <label for="mail">Email:</label>
-        <input type="text" name="mail" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required>
-        <br>
-        <input type="submit" value="Login">
+    <div class="container">
+        <h1>Login</h1>
+        <form method="post" action="login.php">
+            <!-- <label for="mail">Email:</label> -->
+            <input class="input__field" type="text" name="mail" placeholder="Email" required>
+            <!-- <label for="password">Password:</label> -->
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
 
-        <p>Don't have an account? <a href="register.php">Register</a></p>
-    </form>
+        <span class="exceptions">
+            <?php 
+                if (isset($failed)) echo $failed; 
+            ?>
+        </span>
+
+        <span class="divider"></span>
+        <a href="register.php">Register</a>
+    </div>
 </body>
 </html>
