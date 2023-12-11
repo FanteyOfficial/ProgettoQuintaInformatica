@@ -6,6 +6,8 @@
 ---
 ## Funzionalità:
 - [x] Registrazione e accesso di un account utente (registrazione tramite mail)
+- [ ] Aggiunta di un utente alla propria "rubrica"
+- [ ] Rimozione di un utente dalla propria "rubrica"
 - [ ] Modifica dati di un utente
 - [ ] Eliminazione di un account utente
 - [ ] Visualizzazione utenti con cui poter interagire (Nome utente + tag univoco)
