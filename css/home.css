@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa&family=Chokokutai&family=Cinzel&family=Montserrat&family=Mulish&family=Noto+Sans&family=Nunito&family=Oswald&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #CFC1BB;
+    padding: 1em 2em;
+    align-items: baseline;
+    height: auto;
+}
+
+header a {
+    font-family: 'Noto Sans', sans-serif;
+    text-decoration: none;
+    padding: 0.5em 1.5em;
+    background-color: #FB5B59;
+    color: #545455;
+    font-size: 1rem;
+
+    transition: 300ms;
+}
+
+header a:hover {
+    background-color: #545455;
+    color: #FB5B59;
+}
+
+
+
+main {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 20%;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
