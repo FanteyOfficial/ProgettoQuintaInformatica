@@ -64,7 +64,7 @@ CREATE TABLE Utenti (
     ultimo_accesso TIMESTAMP NOT NULL,
 
     password VARCHAR(255) NOT NULL,
-    salt VARCHAR(255) NOT NULL,
+    salt VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Rubrica (
@@ -76,11 +76,11 @@ CREATE TABLE Rubrica (
 
 CREATE TABLE Chat (
 	id_chat int AUTO_INCREMENT PRIMARY KEY,
-	statoChat VARCHAR(255) NOT NULL
+    statoChat VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Messaggi (
-  id_messaggio int AUTO_INCREMENT PRIMARY KEY,
+	id_messaggio int AUTO_INCREMENT PRIMARY KEY,
   autore VARCHAR(255) NOT NULL,
   contenuto TEXT NOT NULL,
   ora_invio TIMESTAMP NOT NULL,
@@ -92,14 +92,14 @@ CREATE TABLE Messaggi (
 );
 
 CREATE TABLE ConversaIn (
-  utente_id int,
+	utente_id int,
   chat_id int,
   FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
   FOREIGN KEY (chat_id) REFERENCES Chat(id_chat)
 );
 
 CREATE TABLE VisualizzatoDa (
-  utente_id int,
+	utente_id int,
   messaggio_id int,
   oraVisualizzazione TIMESTAMP,
   FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
@@ -117,4 +117,24 @@ INSERT INTO stati (id_stato, descrizione) VALUES (1, 'Online'), (2, 'Offline');
 
 ALTER TABLE Utenti
 ADD CONSTRAINT fk_stato FOREIGN KEY (stato) REFERENCES stati(id_stato);
+
+ALTER TABLE Utenti
+ADD COLUMN remember_me_token VARCHAR(255);
+
+CREATE TABLE TipoMessaggio (
+    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
+    descrizione VARCHAR(255) NOT NULL
+);
+
+INSERT INTO TipoMessaggio (descrizione) VALUES
+    ('Testo'),
+    ('Immagine'),
+    ('Vocale'),
+    ('File');
+
+ALTER TABLE Messaggi
+MODIFY COLUMN tipo INT;
+
+ALTER TABLE Messaggi
+ADD CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo);
 ```

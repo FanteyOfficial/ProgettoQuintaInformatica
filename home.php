@@ -3,6 +3,24 @@
 <?php
     session_start();
 
+    if (!isset($_SESSION['id_utente']) && isset($_COOKIE['remember_me'])) {
+        $token = $_COOKIE['remember_me'];
+    
+        // Check if the token is valid
+        $checkTokenSql = "SELECT id_utente FROM Utenti WHERE remember_me_token = ?";
+        $checkTokenStmt = $conn->prepare($checkTokenSql);
+        $checkTokenStmt->bind_param("s", $token);
+        $checkTokenStmt->execute();
+        $checkTokenResult = $checkTokenStmt->get_result();
+    
+        if ($checkTokenResult->num_rows > 0) {
+            $userId = $checkTokenResult->fetch_assoc()['id_utente'];
+            $_SESSION['id_utente'] = $userId;
+        }
+    
+        $checkTokenStmt->close();
+    }
+
     if (!isset($_SESSION['id_utente'])) {
         header("Location: login.php");
     }

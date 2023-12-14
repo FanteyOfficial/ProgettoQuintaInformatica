@@ -29,6 +29,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userEnteredPassword = $_POST['password'];
 
         if (password_verify($userEnteredPassword . $salt, $storedPassword)) {
+            // Generate a random remember me token
+            $rememberMeToken = bin2hex(random_bytes(32));
+
+            // Store the token in the database
+            $updateTokenSql = "UPDATE Utenti SET remember_me_token = ? WHERE id_utente = ?";
+            $updateTokenStmt = $conn->prepare($updateTokenSql);
+            $updateTokenStmt->bind_param("si", $rememberMeToken, $row['id_utente']);
+            $updateTokenStmt->execute();
+            $updateTokenStmt->close();
+
+            // Set the remember me cookie
+            setcookie("remember_me", $rememberMeToken, time() + (60), "/"); // Cookie expires in 30 days
+
             $_SESSION['id_utente'] = $row['id_utente'];
             header("Location: home.php");
             exit();

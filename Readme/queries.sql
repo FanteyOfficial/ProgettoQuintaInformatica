@@ -61,3 +61,23 @@ INSERT INTO stati (id_stato, descrizione) VALUES (1, 'Online'), (2, 'Offline');
 
 ALTER TABLE Utenti
 ADD CONSTRAINT fk_stato FOREIGN KEY (stato) REFERENCES stati(id_stato);
+
+ALTER TABLE Utenti
+ADD COLUMN remember_me_token VARCHAR(255);
+
+CREATE TABLE TipoMessaggio (
+    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
+    descrizione VARCHAR(255) NOT NULL
+);
+
+INSERT INTO TipoMessaggio (descrizione) VALUES
+    ('Testo'),
+    ('Immagine'),
+    ('Vocale'),
+    ('File');
+
+ALTER TABLE Messaggi
+MODIFY COLUMN tipo INT;
+
+ALTER TABLE Messaggi
+ADD CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo);
