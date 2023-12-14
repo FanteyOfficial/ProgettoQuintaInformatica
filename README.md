@@ -3,6 +3,11 @@
 ### Problema: Comunicazione a distanza.
 ### Descrizione:
 #### WebApp di messaggistica istantanea (ispirato a WhatsApp e Telegram).
+
+### Per avviarlo:
+- utilizzare xampp avviando i servizi di Apache e MySql.
+- eseguire la query in fondo al readme oppure dal file Readme/query.sql
+
 ---
 ## Funzionalità:
 - [x] Registrazione e accesso di un account utente (registrazione tramite mail)
