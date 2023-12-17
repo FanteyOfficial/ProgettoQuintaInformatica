@@ -20,7 +20,7 @@
 - [ ] Rimozione di un utente dalla propria "rubrica"
 - [ ] Modifica dati di un utente
 - [ ] Eliminazione di un account utente
-- [x] Visualizzazione utenti con cui poter interagire (Nome utente + tag univoco)
+- [x] Visualizzazione utenti con cui poter interagire
 - [ ] Invio messaggi a un altro utente
 - [ ] Eliminazione di un messaggio dalla conversazione
 - [ ] Eliminazione di una conversazione
