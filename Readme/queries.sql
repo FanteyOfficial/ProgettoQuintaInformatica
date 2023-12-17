@@ -1,3 +1,5 @@
+CREATE DATABASE chat_app_test;
+
 CREATE TABLE Utenti (
     id_utente int AUTO_INCREMENT PRIMARY KEY, 
     mail VARCHAR(255) NOT NULL UNIQUE,

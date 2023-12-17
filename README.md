@@ -1,16 +1,21 @@
 # ProgettoQuintaInformatica
 
 ### Problema: Comunicazione a distanza.
+
 ### Descrizione:
+
 #### WebApp di messaggistica istantanea (ispirato a WhatsApp e Telegram).
 
 ### Per avviarlo:
+
 - utilizzare xampp avviando i servizi di Apache e MySql.
 - eseguire la query in fondo al readme oppure dal file Readme/query.sql
 
 ---
+
 ## Funzionalità:
-- [x] Registrazione e accesso di un account utente (registrazione tramite mail)
+
+- [X] Registrazione e accesso di un account utente (registrazione tramite mail)
 - [ ] Aggiunta di un utente alla propria "rubrica"
 - [ ] Rimozione di un utente dalla propria "rubrica"
 - [ ] Modifica dati di un utente
@@ -29,8 +34,11 @@
 - [ ] Visualizzazione stato online o ultimo accesso dell'utente
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
 - [ ] Rinominazione utente salvato nella propria "rubrica"
+
 ---
+
 ## Assunzioni
+
 - Si assume che ogni utente per avere un contatto deve condividere almeno una chat con esso.
 - Si assume che la mail e la username associata all'account dell'utente siano univoci, ma NON chiavi primarie.
 - Si assume che ogni chat sia posseduta da 2 o più utenti.
@@ -41,24 +49,28 @@
 - Si assume che ogni rubrica abbia 1 e un solo utente.
 - Si assume che ogni utente può avere 1 e una sola rubrica.
 - Si assume che il tag_univoco corrisponda all'id_utente.
----
-## ER
-![Screenshot](./Readme/ERChatApp.png)
----
-## Schema logico relazionale
-![Screenshot](./Readme/SchemaLogicoRelazionale.PNG)
+
 ---
 
+## ER
+
+## Schema logico relazionale
+
 ## Schema relazionale
+
 ![Screenshot](./Readme/SchemaRelazionale.png)
 
 ## MockUp
+
 ![Screenshot](./Readme/Slide1.jpg)
 ![Screenshot](./Readme/Slide2.PNG)
 ![Screenshot](./Readme/Slide3.PNG)
 
 ## Queries per creazione tabelle
+
 ```sql
+CREATE DATABASE chat_app_test;
+
 CREATE TABLE Utenti (
     id_utente int AUTO_INCREMENT PRIMARY KEY, 
     mail VARCHAR(255) NOT NULL UNIQUE,
