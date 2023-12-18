@@ -1,4 +1,6 @@
 <?php
+    include "config.php";
+    
     session_start();
 
     // Clear the remember me token

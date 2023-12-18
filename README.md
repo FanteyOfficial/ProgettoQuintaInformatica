@@ -18,9 +18,9 @@
 - [X] Registrazione e accesso di un account utente (registrazione tramite mail)
 - [ ] Aggiunta di un utente alla propria "rubrica"
 - [ ] Rimozione di un utente dalla propria "rubrica"
-- [ ] Modifica dati di un utente
-- [ ] Eliminazione di un account utente
-- [x] Visualizzazione utenti con cui poter interagire
+- [X] Modifica dati di un utente
+- [X] Eliminazione di un account utente
+- [X] Visualizzazione utenti con cui poter interagire
 - [ ] Invio messaggi a un altro utente
 - [ ] Eliminazione di un messaggio dalla conversazione
 - [ ] Eliminazione di una conversazione
@@ -55,6 +55,22 @@
 ## ER
 
 ## Schema logico relazionale
+
+Utente (**id_utente**, mail, nome, cognome, username, *stato_id*, ultimoAccesso, password, salt, remember_me_token)
+
+Chat (**id_chat**, statoChat)
+
+Messaggio (**id_messaggio**, contenuto, oraInvio, letto, consegnato, *chat_id*, *tipo_id*, autore)
+
+Rubrica (**id_rubrica**, nomeAssociato, *utente_id*)
+
+Stati (**id_stato**, stato)
+
+tipoMessaggio (**id_tipo**, descrizione)
+
+ConversaIn(*utente_id*, *chat_id*)
+
+VisualizzatoDa (*utente_id*, *messaggio_id*, oraVisualizzazione)
 
 ## Schema relazionale
 

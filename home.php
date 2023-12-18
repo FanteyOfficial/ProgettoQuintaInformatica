@@ -45,9 +45,9 @@
 </head>
 <body>
     <header>
-        <a href="#">Profilo utente</a>
+        <a href="profile.php">Profilo utente</a>
         <form method="post" action="home.php">
-            <input type="text" name="search" placeholder="Cerca" />
+            <input type="text" name="search" placeholder="Cerca" autocomplete="off"/>
             <input type="submit" value="🔍" />
         </form>
     </header>
