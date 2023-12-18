@@ -68,7 +68,7 @@ Rubrica (**id_rubrica**, nomeAssociato, *utente_id*)
 
 Stati (**id_stato**, stato)
 
-tipoMessaggio (**id_tipo**, descrizione)
+TipoMessaggio (**id_tipo**, descrizione)
 
 ConversaIn(*utente_id*, *chat_id*)
 
