@@ -54,6 +54,8 @@
 
 ## ER
 
+![Screenshot](./Readme/ERChatApp.png)
+
 ## Schema logico relazionale
 
 Utente (**id_utente**, mail, nome, cognome, username, *stato_id*, ultimoAccesso, password, salt, remember_me_token)
