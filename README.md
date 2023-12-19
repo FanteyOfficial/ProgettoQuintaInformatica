@@ -16,8 +16,8 @@
 ## Funzionalità:
 
 - [X] Registrazione e accesso di un account utente (registrazione tramite mail)
-- [ ] Aggiunta di un utente alla propria "rubrica"
-- [ ] Rimozione di un utente dalla propria "rubrica"
+- [ ] Aggiunta di un utente nei propri "contatti"
+- [ ] Rimozione di un utente nei propri "contatti"
 - [X] Modifica dati di un utente
 - [X] Eliminazione di un account utente
 - [X] Visualizzazione utenti con cui poter interagire
@@ -33,7 +33,7 @@
 - [ ] Visualizzazione orario di invio del messaggio
 - [ ] Visualizzazione stato online o ultimo accesso dell'utente
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
-- [ ] Rinominazione utente salvato nella propria "rubrica"
+- [ ] Rinominazione utente salvato tra i propri "contatti"
 
 ---
 
@@ -46,7 +46,8 @@
 - Si assume che ogni chat abbia 0 o più messaggi.
 - Si assume che ogni messaggio abbia 1 e 1 sola chat.
 - Si assume che ogni chat può avere 0 o più utenti.
-- Si assume che ogni rubrica abbia 1 e un solo utente.
+- Si assume che un utente può avere più contatti.
+- Si assume che un contatto può avere 1 e 1 solo utente.
 - Si assume che ogni utente può avere 1 e una sola rubrica.
 - Si assume che il tag_univoco corrisponda all'id_utente.
 
