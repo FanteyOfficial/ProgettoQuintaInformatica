@@ -61,19 +61,15 @@
 
 Utente (**id_utente**, mail, nome, cognome, username, *stato_id*, ultimoAccesso, password, salt, remember_me_token)
 
-Chat (**id_chat**, statoChat)
+Chat (**id_chat**, statoChat, *utente_id*, *contatto_id*)
 
-Messaggio (**id_messaggio**, contenuto, oraInvio, letto, consegnato, *chat_id*, *tipo_id*, *utente_id*)
+Messaggio (**id_messaggio**, contenuto, oraInvio, letto, consegnato, *chat_id*, *tipo_id*, *utente_id*, oraVisualizzazione)
 
 Contatto (**id_contatto**, nomeAssociato, *utente_id*, *utente_contatto_id*)
 
 Stati (**id_stato**, stato)
 
 TipoMessaggio (**id_tipo**, descrizione)
-
-ConversaIn(*utente_id*, *chat_id*, *contatto_id*)
-
-VisualizzatoDa (*utente_id*, *messaggio_id*, oraVisualizzazione)
 
 ## Schema relazionale
 
