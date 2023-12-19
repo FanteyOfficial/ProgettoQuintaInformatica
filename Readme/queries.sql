@@ -13,7 +13,7 @@ CREATE TABLE Utenti (
     salt VARCHAR(255) NOT NULL,
     remember_me_token VARCHAR(255),
 
-    CONSTRAINT fk_stato FOREIGN KEY (stato) REFERENCES stati(id_stato);
+    CONSTRAINT fk_stato FOREIGN KEY (stato) REFERENCES stati(id_stato)
 );
 
 CREATE TABLE Contatti (
@@ -39,9 +39,9 @@ CREATE TABLE Messaggi (
   consegnato TINYINT NOT NULL,
   chat_id int,
   FOREIGN KEY (chat_id) REFERENCES Chat(id_chat),
-  FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente)
+  FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
   tipo INT,
-  CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo);
+  CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo)
 );
 
 CREATE TABLE ConversaIn (
