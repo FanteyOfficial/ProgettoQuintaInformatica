@@ -16,11 +16,11 @@
 ## Funzionalità:
 
 - [X] Registrazione e accesso di un account utente (registrazione tramite mail)
-- [ ] Aggiunta di un utente nei propri "contatti"
+- [X] Aggiunta di un utente nei propri "contatti" ***(da sistemare)***
 - [ ] Rimozione di un utente nei propri "contatti"
 - [X] Modifica dati di un utente
-- [X] Eliminazione di un account utente
-- [X] Visualizzazione utenti con cui poter interagire
+- [X] Eliminazione di un account utente ***(da sistemare)***
+- [X] Visualizzazione utenti con cui poter interagire ***(da sistemare)***
 - [ ] Invio messaggi a un altro utente
 - [ ] Eliminazione di un messaggio dalla conversazione
 - [ ] Eliminazione di una conversazione
@@ -78,6 +78,7 @@ TipoMessaggio (**id_tipo**, descrizione)
 ![Screenshot](./Readme/Slide1.jpg)
 ![Screenshot](./Readme/Slide2.PNG)
 ![Screenshot](./Readme/Slide3.PNG)
+![Screenshot](./Readme/Slide4.PNG)
 
 ## Queries per creazione tabelle
 
@@ -133,7 +134,7 @@ CREATE TABLE Chat (
     utente_id INT,
     utente_contatto_id INT,
     FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (utente_contatto_id) REFERENCES Utenti(id_utente)
+    FOREIGN KEY (utente_contatto_id) REFERENCES Contatti(id_contatto)
 );
 
 CREATE TABLE Messaggi (
@@ -152,6 +153,5 @@ CREATE TABLE Messaggi (
     CONSTRAINT fk_utente FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
     CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo)
 );
-
 
 ```

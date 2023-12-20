@@ -12,26 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Perform account deletion
     $userId = $_SESSION['id_utente'];
 
-    // Delete entries from ConversaIn table
-    $deleteConversaInSql = "DELETE FROM ConversaIn WHERE utente_id = ?";
-    $deleteConversaInStmt = $conn->prepare($deleteConversaInSql);
-    $deleteConversaInStmt->bind_param("i", $userId);
-    $deleteConversaInStmt->execute();
-    $deleteConversaInStmt->close();
-
-    // Delete entries from Rubrica table
-    $deleteRubricaSql = "DELETE FROM Rubrica WHERE utente_id = ?";
+    // Delete entries from Contatti table
+    $deleteRubricaSql = "DELETE FROM Contatti WHERE utente_id = ?";
     $deleteRubricaStmt = $conn->prepare($deleteRubricaSql);
     $deleteRubricaStmt->bind_param("i", $userId);
     $deleteRubricaStmt->execute();
     $deleteRubricaStmt->close();
-
-    // Delete entries from VisualizzatoDa table
-    $deleteVisualizzatoDaSql = "DELETE FROM VisualizzatoDa WHERE utente_id = ?";
-    $deleteVisualizzatoDaStmt = $conn->prepare($deleteVisualizzatoDaSql);
-    $deleteVisualizzatoDaStmt->bind_param("i", $userId);
-    $deleteVisualizzatoDaStmt->execute();
-    $deleteVisualizzatoDaStmt->close();
 
     // Delete entries from Utenti table
     $deleteUtentiSql = "DELETE FROM Utenti WHERE id_utente = ?";

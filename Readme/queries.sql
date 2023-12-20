@@ -49,7 +49,7 @@ CREATE TABLE Chat (
     utente_id INT,
     utente_contatto_id INT,
     FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (utente_contatto_id) REFERENCES Utenti(id_utente)
+    FOREIGN KEY (utente_contatto_id) REFERENCES Contatti(id_contatto)
 );
 
 CREATE TABLE Messaggi (
@@ -68,4 +68,3 @@ CREATE TABLE Messaggi (
     CONSTRAINT fk_utente FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
     CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo)
 );
-

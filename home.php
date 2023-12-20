@@ -56,20 +56,20 @@
         <div class="users">
             <?php
                 $user_id = $_SESSION['id_utente'];
-                $sql = "SELECT c.id_chat, c.statoChat, u.id_utente, u.username, r.nomeAssociato
-                        FROM Chat c
-                        LEFT JOIN ConversaIn ci ON c.id_chat = ci.chat_id
-                        LEFT JOIN Utenti u ON (u.id_utente = ci.utente_id AND u.id_utente != ?)
-                        LEFT JOIN Rubrica r ON u.id_utente = r.utente_id
-                        WHERE c.id_chat IS NOT NULL";
+                $sql = "SELECT Utenti.id_utente, Utenti.mail, Utenti.nome, Utenti.cognome, Utenti.username, Contatti.nomeAssociato, Chat.id_chat
+                        FROM Utenti
+                        JOIN Contatti ON Utenti.id_utente = Contatti.utente_contatto_id
+                        LEFT JOIN Chat ON (Utenti.id_utente = Chat.utente_contatto_id)
+                        WHERE Chat.utente_id = ? OR Chat.utente_contatto_id = ?
+                        ORDER BY Chat.id_chat;";
 
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("i", $user_id);
+                $stmt->bind_param("ii", $user_id, $user_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
 
                 while ($row = $result->fetch_assoc()) {
-                    $chat_name = ($row['nomeAssociato']) ? $row['nomeAssociato'] : $row['username'] . " (ID: " . $row['id_utente'] . ")";
+                    $chat_name = ($row['nomeAssociato']) ? $row['nomeAssociato'] : $row['username'] . " (ID: " . $row['Chat.utente_contatto_id'] . ")";
                     $chat_id = $row['id_chat'];
                     echo '<a href="home.php?chat_id=' . $chat_id . '">' . $chat_name . '</a>';
                 }
@@ -96,7 +96,7 @@
                 <div class="messages">
                     <?php
                         while ($messageRow = $resultMessages->fetch_assoc()) {
-                            $messageAuthor = $messageRow['autore'];
+                            $messageAuthor = $messageRow['utente_id'];
                             $messageContent = $messageRow['contenuto'];
                             $messageTimestamp = $messageRow['ora_invio'];
 
