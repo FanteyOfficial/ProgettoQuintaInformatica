@@ -6,6 +6,8 @@
 
 #### WebApp di messaggistica istantanea (ispirato a WhatsApp e Telegram).
 
+**AVVISO:** a causa di diverse modifiche alla progettazione del database molte delle funzionalità implementate in precedenza sono ancora in fase di manutenzione (contrassegnate con "***(da sistemare)***").
+
 ### Per avviarlo:
 
 - utilizzare xampp avviando i servizi di Apache e MySql.
@@ -17,7 +19,7 @@
 
 - [X] Registrazione e accesso di un account utente (registrazione tramite mail)
 - [X] Aggiunta di un utente nei propri "contatti" ***(da sistemare)***
-- [ ] Rimozione di un utente nei propri "contatti"
+- [X] Rimozione di un utente nei propri "contatti" ***(da sistemare)***
 - [X] Modifica dati di un utente
 - [X] Eliminazione di un account utente ***(da sistemare)***
 - [X] Visualizzazione utenti con cui poter interagire ***(da sistemare)***
