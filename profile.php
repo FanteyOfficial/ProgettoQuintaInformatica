@@ -35,7 +35,6 @@
         if (isset($_POST['add_contact'])) {
             try {
                 $newContactUsername = $_POST['new_contact_username'];
-                $newContactName = $_POST['new_contact_name'];
 
                 // Check if the contact's username exists in the Utenti table
                 $checkContactSql = "SELECT id_utente FROM Utenti WHERE username = ?";
@@ -45,35 +44,40 @@
                 $checkContactResult = $checkContactStmt->get_result();
 
                 if ($checkContactResult->num_rows > 0) {
-                    // Contact username exists, add it to the Contatti table
+                    // Contact username exists, check if a chat already exists
                     $contactUserId = $checkContactResult->fetch_assoc()['id_utente'];
 
-                    $addContactSql = "INSERT INTO Contatti (nomeAssociato, utente_id, utente_contatto_id) VALUES (?, ?, ?)";
-                    $addContactStmt = $conn->prepare($addContactSql);
-                    $addContactStmt->bind_param("sii", $newContactName, $_SESSION['id_utente'], $contactUserId);
-                    $addContactStmt->execute();
-                    $addContactStmt->close();
+                    $existingChatSql = "SELECT id_chat FROM Chat WHERE (partecipante1 = ? AND partecipante2 = ?) OR (partecipante1 = ? AND partecipante2 = ?)";
+                    $existingChatStmt = $conn->prepare($existingChatSql);
+                    $existingChatStmt->bind_param("iiii", $_SESSION['id_utente'], $contactUserId, $contactUserId, $_SESSION['id_utente']);
+                    $existingChatStmt->execute();
+                    $existingChatResult = $existingChatStmt->get_result();
 
-                    $resultMessage = "Contatto aggiunto con successo!";
+                    if ($existingChatResult->num_rows > 0) {
+                        // Chat already exists
+                        $resultMessage = "Una chat con il contatto esiste già!";
+                    } else {
+                        // Initialize a new chat between the current user and the added contact
+                        $initializeChatSql = "INSERT INTO Chat (statoChat, partecipante1, partecipante2) VALUES (?, ?, ?)";
+                        $initializeChatStmt = $conn->prepare($initializeChatSql);
+                        $chatState = "Active";  // You can set the initial chat state as needed
+                        $initializeChatStmt->bind_param("sii", $chatState, $_SESSION['id_utente'], $contactUserId);
+                        $initializeChatStmt->execute();
+                        $initializeChatStmt->close();
 
-                    // Initialize a new chat between the current user and the added contact
-                    $initializeChatSql = "INSERT INTO Chat (statoChat, utente_id, utente_contatto_id) VALUES (?, ?, ?)";
-                    $initializeChatStmt = $conn->prepare($initializeChatSql);
-                    $chatState = "Active";  // You can set the initial chat state as needed
-                    $initializeChatStmt->bind_param("sii", $chatState, $_SESSION['id_utente'], $contactUserId);
-                    $initializeChatStmt->execute();
-                    $initializeChatStmt->close();
-
-                    $resultMessage .= " Inizializzazione chat completata!";
+                        $resultMessage = "Chat con il nuovo contatto inizializzata con successo!";
+                    }
                 } else {
                     $resultMessage = "Errore: L'username del contatto non esiste.";
                 }
 
                 $checkContactStmt->close();
+                $existingChatStmt->close();
             } catch (Exception $e) {
-                $resultMessage = "Errore durante l'aggiunta del contatto e l'inizializzazione della chat.";
+                $resultMessage = "Errore durante l'inizializzazione della chat con il nuovo contatto.";
             }
         }
+
 
         // Remove contact if form is submitted
         if (isset($_POST['remove_contact'])) {
@@ -167,9 +171,6 @@
         <form method="post" action="">
             <label for="new_contact_username">Username del contatto:</label>
             <input type="text" name="new_contact_username" required><br>
-
-            <label for="new_contact_name">Nome del contatto:</label>
-            <input type="text" name="new_contact_name" required><br>
 
             <input type="submit" name="add_contact" value="Aggiungi contatto">
         </form>

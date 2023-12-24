@@ -46,10 +46,8 @@ CREATE TABLE Contatti (
 CREATE TABLE Chat (
     id_chat INT AUTO_INCREMENT PRIMARY KEY,
     statoChat VARCHAR(255),
-    utente_id INT,
-    utente_contatto_id INT,
-    FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (utente_contatto_id) REFERENCES Contatti(id_contatto)
+    contatto_id INT,
+    FOREIGN KEY (contatto_id) REFERENCES Contatti(id_contatto)
 );
 
 CREATE TABLE Messaggi (
