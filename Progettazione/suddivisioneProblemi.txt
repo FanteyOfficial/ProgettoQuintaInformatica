@@ -1,0 +1,5 @@
+- creazione degli utenti
+- creazione sistema gestione contatti (mostrandoli)
+- creazione sistema chat (collegare la chat con i contatti e fare in modo che ogni contatto visualizzi 
+  il nome della chat con il nome salvato dall'utente)
+- creazione sistema dei messaggi

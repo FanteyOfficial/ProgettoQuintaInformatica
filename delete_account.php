@@ -9,22 +9,15 @@ if (!isset($_SESSION['id_utente'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Perform account deletion
+    // Deactivate the account
     $userId = $_SESSION['id_utente'];
 
-    // Delete entries from Contatti table
-    $deleteRubricaSql = "DELETE FROM Contatti WHERE utente_id = ?";
-    $deleteRubricaStmt = $conn->prepare($deleteRubricaSql);
-    $deleteRubricaStmt->bind_param("i", $userId);
-    $deleteRubricaStmt->execute();
-    $deleteRubricaStmt->close();
-
-    // Delete entries from Utenti table
-    $deleteUtentiSql = "DELETE FROM Utenti WHERE id_utente = ?";
-    $deleteUtentiStmt = $conn->prepare($deleteUtentiSql);
-    $deleteUtentiStmt->bind_param("i", $userId);
-    $deleteUtentiStmt->execute();
-    $deleteUtentiStmt->close();
+    // Update the 'stato' column to indicate the account is deactivated
+    $deactivateUserSql = "UPDATE Utenti SET stato = 3 WHERE id_utente = ?";
+    $deactivateUserStmt = $conn->prepare($deactivateUserSql);
+    $deactivateUserStmt->bind_param("i", $userId);
+    $deactivateUserStmt->execute();
+    $deactivateUserStmt->close();
 
     // Clear remember me token and expire the remember me cookie
     if (isset($_COOKIE['remember_me'])) {
@@ -53,13 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Elimina account</title>
+        <title>Deactivate account</title>
     </head>
     <body>
-        <h1>Elimina account</h1>
-        <p>Sei sicuro di voler eliminare il tuo account?</p>
+        <h1>Deactivate account</h1>
+        <p>Sei sicuro di voler disattivare il tuo account?</p>
         <form method="post" action="">
-            <input type="submit" value="Conferma eliminazione">
+            <input type="submit" value="Conferma disattivazione">
         </form>
         <br>
         <a href="profile.php">Annulla</a>
