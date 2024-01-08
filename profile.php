@@ -85,12 +85,11 @@
                 $contactUsernameToRemove = $_POST['contact_username_to_remove'];
 
                 // Check if the contact's username exists in the Utenti and Contatti tables
-                $checkContactSql = "SELECT c.id_contatto, c.utente_id, c.utente_contatto_id
-                                    FROM Contatti c
-                                    JOIN Utenti u ON c.utente_contatto_id = u.id_utente
-                                    WHERE c.utente_id = ? AND u.username = ?";
+                $checkContactSql = "SELECT c.partecipante1, c.partecipante2, c.id_chat, c.utente_id
+                                    FROM Chat c
+                                    WHERE (c.partecipante1 = ? AND c.partecipante2 = ?) OR (c.partecipante1 = ? AND c.partecipante2 = ?)";
                 $checkContactStmt = $conn->prepare($checkContactSql);
-                $checkContactStmt->bind_param("is", $_SESSION['id_utente'], $contactUsernameToRemove);
+                $checkContactStmt->bind_param("is", $_SESSION['id_utente'], $contactUsernameToRemove, $contactUsernameToRemove, $_SESSION['id_utente']);
                 $checkContactStmt->execute();
                 $checkContactResult = $checkContactStmt->get_result();
 

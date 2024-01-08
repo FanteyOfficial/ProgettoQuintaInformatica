@@ -151,7 +151,7 @@
                                 $insertMessageSql = "INSERT INTO Messaggi (utente_id, contenuto, ora_invio, letto, consegnato, chat_id, tipo) 
                                                     VALUES (?, ?, CURRENT_TIMESTAMP, 0, 0, ?, 1)"; // Assuming tipo 1 is a text message
                                 $insertMessageStmt = $conn->prepare($insertMessageSql);
-                                $insertMessageStmt->bind_param("isi", $currentUserId, $messageContent, $currentChatId);
+                                $insertMessageStmt->bind_param("isi", $currentUserId, strip_tags($messageContent), $currentChatId);
                                 $insertMessageStmt->execute();
                                 $insertMessageStmt->close();
 
