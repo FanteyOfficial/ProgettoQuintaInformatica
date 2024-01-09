@@ -22,7 +22,7 @@
                 // Update user data in the database
                 $updateUserDataSql = "UPDATE Utenti SET nome = ?, cognome = ?, username = ?, mail = ? WHERE id_utente = ?";
                 $updateUserDataStmt = $conn->prepare($updateUserDataSql);
-                $updateUserDataStmt->bind_param("ssssi", $newNome, $newCognome, $newUsername, $newEmail, $_SESSION['id_utente']);
+                $updateUserDataStmt->bind_param("ssssi", strip_tags($newNome), strip_tags($newCognome), strip_tags($newUsername), strip_tags($newEmail), $_SESSION['id_utente']);
                 $updateUserDataStmt->execute();
                 $updateUserDataStmt->close();
                 $resultMessage = "Dati aggiornati con successo!";
@@ -79,47 +79,48 @@
         }
 
 
-        // Remove contact if form is submitted
+        // Deactivate or remove contact if form is submitted
         if (isset($_POST['remove_contact'])) {
+
+            $sql = "SELECT * FROM Utenti WHERE id_utente = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $_SESSION['id_utente']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
             try {
                 $contactUsernameToRemove = $_POST['contact_username_to_remove'];
 
-                // Check if the contact's username exists in the Utenti and Contatti tables
-                $checkContactSql = "SELECT c.partecipante1, c.partecipante2, c.id_chat, c.utente_id
+                // Check if the contact's usernames exist in the Utenti and Chat tables
+                $checkContactSql = "SELECT c.id_chat, c.partecipante1, c.partecipante2, c.statoChat
                                     FROM Chat c
-                                    WHERE (c.partecipante1 = ? AND c.partecipante2 = ?) OR (c.partecipante1 = ? AND c.partecipante2 = ?)";
+                                    INNER JOIN Utenti u1 ON c.partecipante1 = u1.id_utente
+                                    INNER JOIN Utenti u2 ON c.partecipante2 = u2.id_utente
+                                    WHERE (u1.username = ? AND u2.username = ?) OR (u1.username = ? AND u2.username = ?)";
                 $checkContactStmt = $conn->prepare($checkContactSql);
-                $checkContactStmt->bind_param("is", $_SESSION['id_utente'], $contactUsernameToRemove, $contactUsernameToRemove, $_SESSION['id_utente']);
+                $checkContactStmt->bind_param("ssss", $row['username'], $contactUsernameToRemove, $contactUsernameToRemove, $row['username']);
                 $checkContactStmt->execute();
                 $checkContactResult = $checkContactStmt->get_result();
 
                 if ($checkContactResult->num_rows > 0) {
-                    // Contact exists, remove it from the Contatti table
+                    // Contact exists, update the Chat table to deactivate the chat
                     $contactData = $checkContactResult->fetch_assoc();
-                    $contactIdToRemove = $contactData['id_contatto'];
+                    $chatIdToUpdate = $contactData['id_chat'];
 
-                    $removeContactSql = "DELETE FROM Contatti WHERE id_contatto = ?";
-                    $removeContactStmt = $conn->prepare($removeContactSql);
-                    $removeContactStmt->bind_param("i", $contactIdToRemove);
-                    $removeContactStmt->execute();
-                    $removeContactStmt->close();
+                    $updateChatSql = "UPDATE Chat SET statoChat = 'Deactivated' WHERE id_chat = ?";
+                    $updateChatStmt = $conn->prepare($updateChatSql);
+                    $updateChatStmt->bind_param("i", $chatIdToUpdate);
+                    $updateChatStmt->execute();
+                    $updateChatStmt->close();
 
-                    // Optional: You may want to also remove associated chat or messages here
-                    // Remove associated chat
-                    $removeChatSql = "DELETE FROM Chat WHERE id_chat = ? AND utente_id = ? AND utente_contatto_id = ?";
-                    $removeChatStmt = $conn->prepare($removeChatSql);
-                    $removeChatStmt->bind_param("iii", $contactData['id_contatto'], $_SESSION['id_utente'], $contactData['utente_id']);
-                    $removeChatStmt->execute();
-                    $removeChatStmt->close();
-
-                    $resultMessage = "Contatto rimosso con successo!";
+                    $resultMessage = "Contatto disattivato con successo!";
                 } else {
                     $resultMessage = "Errore: Il contatto non esiste o non ti appartiene.";
                 }
 
                 $checkContactStmt->close();
             } catch (Exception $e) {
-                $resultMessage = "Errore durante la rimozione del contatto.";
+                $resultMessage = "Errore durante la disattivazione del contatto.";
             }
         }
     }
