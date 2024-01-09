@@ -54,8 +54,19 @@
                     $existingChatResult = $existingChatStmt->get_result();
 
                     if ($existingChatResult->num_rows > 0) {
-                        // Chat already exists
-                        $resultMessage = "Una chat con il contatto esiste già!";
+                        // Chat already exists, activate the chat if it's not already active
+                        $existingChatData = $existingChatResult->fetch_assoc();
+                        if ($existingChatData['statoChat'] !== 'Active') {
+                            $activateChatSql = "UPDATE Chat SET statoChat = 'Active' WHERE id_chat = ?";
+                            $activateChatStmt = $conn->prepare($activateChatSql);
+                            $activateChatStmt->bind_param("i", $existingChatData['id_chat']);
+                            $activateChatStmt->execute();
+                            $activateChatStmt->close();
+
+                            $resultMessage = "Chat con il contatto attivata con successo!";
+                        } else {
+                            $resultMessage = "Una chat con il contatto è già attiva!";
+                        }
                     } else {
                         // Initialize a new chat between the current user and the added contact
                         $initializeChatSql = "INSERT INTO Chat (statoChat, partecipante1, partecipante2) VALUES (?, ?, ?)";
@@ -70,9 +81,9 @@
                 } else {
                     $resultMessage = "Errore: L'username del contatto non esiste.";
                 }
-
+                /* 
                 $checkContactStmt->close();
-                $existingChatStmt->close();
+                $existingChatStmt->close(); */
             } catch (Exception $e) {
                 $resultMessage = "Errore durante l'inizializzazione della chat con il nuovo contatto.";
             }
