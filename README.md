@@ -77,7 +77,7 @@ TipoMessaggio (**id_tipo**, descrizione)
 
 ## MockUp
 
-![Screenshot](./Readme/Slide1.jpg)
+![Screenshot](./Readme/Slide1.PNG)
 ![Screenshot](./Readme/Slide2.PNG)
 ![Screenshot](./Readme/Slide3.PNG)
 ![Screenshot](./Readme/Slide4.PNG)
