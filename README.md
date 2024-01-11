@@ -56,7 +56,6 @@
 - Si assume che ogni messaggio abbia 1 e 1 sola chat.
 - Si assume che un utente può avere 0 o più contatti.
 - Si assume che un contatto può avere 1 e 1 solo utente.
-- Si assume che il tag_univoco corrisponda all'id_utente.
 
 ---
 
