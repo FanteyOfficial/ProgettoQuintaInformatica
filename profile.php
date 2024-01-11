@@ -56,10 +56,10 @@
                     if ($existingChatResult->num_rows > 0) {
                         // Chat already exists, activate the chat if it's not already active
                         $existingChatData = $existingChatResult->fetch_assoc();
-                        if ($existingChatData['statoChat'] !== 'Active') {
-                            $activateChatSql = "UPDATE Chat SET statoChat = 'Active' WHERE id_chat = ?";
+                        if ($existingChatData['statoChat'] !== 0) {
+                            $activateChatSql = "UPDATE Chat SET statoChat = ? WHERE id_chat = ?";
                             $activateChatStmt = $conn->prepare($activateChatSql);
-                            $activateChatStmt->bind_param("i", $existingChatData['id_chat']);
+                            $activateChatStmt->bind_param("ii", 0, $existingChatData['id_chat']);
                             $activateChatStmt->execute();
                             $activateChatStmt->close();
 
@@ -118,9 +118,9 @@
                     $contactData = $checkContactResult->fetch_assoc();
                     $chatIdToUpdate = $contactData['id_chat'];
 
-                    $updateChatSql = "UPDATE Chat SET statoChat = 'Deactivated' WHERE id_chat = ?";
+                    $updateChatSql = "UPDATE Chat SET statoChat = ? WHERE id_chat = ?";
                     $updateChatStmt = $conn->prepare($updateChatSql);
-                    $updateChatStmt->bind_param("i", $chatIdToUpdate);
+                    $updateChatStmt->bind_param("ii", 1, $chatIdToUpdate);
                     $updateChatStmt->execute();
                     $updateChatStmt->close();
 
