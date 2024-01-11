@@ -12,6 +12,13 @@
 
 - utilizzare xampp avviando i servizi di Apache e MySql.
 - eseguire la query in fondo al readme oppure dal file Readme/query.sql
+- prima di iniziare la conversazione, entrare nella sezione "Profilo" cliccando il tasto in alto a sinistra
+- aggiungere una nuova conversazione nella sezione del profilo "Add new contact"
+- tornare alla pagina principale cliccando "Home"
+- per vedere le opzioni della conversazione cliccare il contatto visualizzato a sinistra della pagina
+- inviare un messaggio
+- cliccare il tasto "Logout" nella pagina del profilo
+- loggarsi con un altro account e inviare i messaggi con il contatto da cui è stato aggiunto l'account in precedenza
 
 ---
 
@@ -20,6 +27,7 @@
 - [X] Registrazione e accesso di un account utente (registrazione tramite mail)
 - [X] Aggiunta di una chat con un utente
 - [X] Disattivazione di una chat con un utente
+- [X] Riattivazione di una chat con un utente
 - [X] Modifica dati di un utente
 - [ ] Eliminazione di un account utente ***(da sistemare)***
 - [X] Visualizzazione utenti con cui poter interagire
