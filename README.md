@@ -18,24 +18,23 @@
 ## Funzionalità:
 
 - [X] Registrazione e accesso di un account utente (registrazione tramite mail)
-- [X] Aggiunta di un utente nei propri "contatti" ***(da sistemare)***
-- [X] Rimozione di un utente nei propri "contatti" ***(da sistemare)***
+- [X] Aggiunta di una chat con un utente
+- [X] Disattivazione di una chat con un utente
 - [X] Modifica dati di un utente
-- [X] Eliminazione di un account utente ***(da sistemare)***
-- [X] Visualizzazione utenti con cui poter interagire ***(da sistemare)***
-- [ ] Invio messaggi a un altro utente
+- [ ] Eliminazione di un account utente ***(da sistemare)***
+- [X] Visualizzazione utenti con cui poter interagire
+- [X] Invio messaggi a un altro utente
 - [ ] Eliminazione di un messaggio dalla conversazione
-- [ ] Eliminazione di una conversazione
+- [X] Eliminazione di una conversazione
 - [ ] Modifica di un messaggio inviato
 - [ ] Ricerca di uno o più messaggi attraverso una parola chiave
 - [ ] Ricerca di un contatto attraverso una parola chiave
-- [ ] Visualizzazione dei messaggi inviati e ricevuti dall'utente
+- [X] Visualizzazione dei messaggi inviati e ricevuti dall'utente
 - [ ] Recupero password
 - [ ] Visualizzazione da parte del mittente se il destinatario ha visualizzato il messaggio
-- [ ] Visualizzazione orario di invio del messaggio
+- [X] Visualizzazione orario di invio del messaggio
 - [ ] Visualizzazione stato online o ultimo accesso dell'utente
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
-- [ ] Rinominazione utente salvato tra i propri "contatti"
 
 ---
 
@@ -94,7 +93,7 @@ CREATE TABLE stati (
     descrizione VARCHAR(255) NOT NULL
 );
 
-INSERT INTO stati (id_stato, descrizione) VALUES (1, 'Online'), (2, 'Offline');
+INSERT INTO stati (id_stato, descrizione) VALUES (1, 'Online'), (2, 'Offline'), (3, 'Deactivated');
 
 CREATE TABLE TipoMessaggio (
     id_tipo INT AUTO_INCREMENT PRIMARY KEY,
@@ -121,22 +120,13 @@ CREATE TABLE Utenti (
     CONSTRAINT fk_stato FOREIGN KEY (stato) REFERENCES stati(id_stato)
 );
 
-CREATE TABLE Contatti (
-    id_contatto INT AUTO_INCREMENT PRIMARY KEY,
-    nomeAssociato VARCHAR(255),
-    utente_id INT,
-    utente_contatto_id INT,
-    FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (utente_contatto_id) REFERENCES Utenti(id_utente)
-);
-
 CREATE TABLE Chat (
     id_chat INT AUTO_INCREMENT PRIMARY KEY,
     statoChat VARCHAR(255),
-    utente_id INT,
-    utente_contatto_id INT,
-    FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (utente_contatto_id) REFERENCES Contatti(id_contatto)
+    partecipante1 INT,
+    partecipante2 INT,
+    FOREIGN KEY (partecipante1) REFERENCES Utenti(id_utente),
+    FOREIGN KEY (partecipante2) REFERENCES Utenti(id_utente)
 );
 
 CREATE TABLE Messaggi (
@@ -148,12 +138,9 @@ CREATE TABLE Messaggi (
     consegnato TINYINT NOT NULL,
     chat_id INT NOT NULL,
     oraVisualizzazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (chat_id) REFERENCES Chat(id_chat),
-    FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
-    tipo INT,
     CONSTRAINT fk_chat FOREIGN KEY (chat_id) REFERENCES Chat(id_chat),
     CONSTRAINT fk_utente FOREIGN KEY (utente_id) REFERENCES Utenti(id_utente),
+    tipo INT,
     CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo)
 );
-
 ```
