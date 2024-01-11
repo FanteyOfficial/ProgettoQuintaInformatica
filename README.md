@@ -127,12 +127,22 @@ CREATE TABLE Utenti (
 
 CREATE TABLE Chat (
     id_chat INT AUTO_INCREMENT PRIMARY KEY,
-    statoChat VARCHAR(255),
+    statoChat INT,
     partecipante1 INT,
     partecipante2 INT,
     FOREIGN KEY (partecipante1) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (partecipante2) REFERENCES Utenti(id_utente)
+    FOREIGN KEY (partecipante2) REFERENCES Utenti(id_utente),
+    FOREIGN KEY (statoChat) REFERENCES StatoChat(id_tipo)
 );
+
+CREATE TABLE StatoChat {
+    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
+    descrizione VARCHAR(255) NOT NULL
+};
+
+INSERT INTO StatoChat (descrizione) VALUES
+    ('Active'),
+    ('Deactivated');
 
 CREATE TABLE Messaggi (
     id_messaggio INT AUTO_INCREMENT PRIMARY KEY,
@@ -148,4 +158,11 @@ CREATE TABLE Messaggi (
     tipo INT,
     CONSTRAINT fk_tipo FOREIGN KEY (tipo) REFERENCES TipoMessaggio(id_tipo)
 );
+
+
+
+-- fill tables with data
+INSERT INTO Utenti (mail, nome, cognome, username, stato, ultimo_accesso, password, salt, remember_me_token) VALUES
+    ('user1@example.com', 'John', 'Doe', 'john_doe', 1, CURRENT_TIMESTAMP, 'password_hash_1', 'salt_1', NULL),
+    ('user2@example.com', 'Jane', 'Smith', 'jane_smith', 2, CURRENT_TIMESTAMP, 'password_hash_2', 'salt_2', NULL);
 ```

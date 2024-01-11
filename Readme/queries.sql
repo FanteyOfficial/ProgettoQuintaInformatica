@@ -36,12 +36,22 @@ CREATE TABLE Utenti (
 
 CREATE TABLE Chat (
     id_chat INT AUTO_INCREMENT PRIMARY KEY,
-    statoChat VARCHAR(255),
+    statoChat INT,
     partecipante1 INT,
     partecipante2 INT,
     FOREIGN KEY (partecipante1) REFERENCES Utenti(id_utente),
-    FOREIGN KEY (partecipante2) REFERENCES Utenti(id_utente)
+    FOREIGN KEY (partecipante2) REFERENCES Utenti(id_utente),
+    FOREIGN KEY (statoChat) REFERENCES StatoChat(id_tipo)
 );
+
+CREATE TABLE StatoChat {
+    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
+    descrizione VARCHAR(255) NOT NULL
+};
+
+INSERT INTO StatoChat (descrizione) VALUES
+    ('Active'),
+    ('Deactivated');
 
 CREATE TABLE Messaggi (
     id_messaggio INT AUTO_INCREMENT PRIMARY KEY,
