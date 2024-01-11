@@ -48,14 +48,12 @@
 
 ## Assunzioni
 
-- Si assume che ogni chat è condivisa da almeno 1 e un solo1 utente e 1 e 1 solo contatto che appartenga all'utente.
+- Si assume che ogni chat è condivisa da almeno 1 e 1 solo utente.
+- Si assume che ogni chat è visualizzata da almeno 1 e 1 solo utente.
 - Si assume che la mail e la username associata all'account dell'utente siano univoci, ma NON chiavi primarie.
 - Si assume che ogni utente possa avere 0 o più chat.
-- Si assume che ogni contatto possa avere 1 e 1 sola chat con l'utente.
 - Si assume che ogni chat abbia 0 o più messaggi.
 - Si assume che ogni messaggio abbia 1 e 1 sola chat.
-- Si assume che un utente può avere 0 o più contatti.
-- Si assume che un contatto può avere 1 e 1 solo utente.
 
 ---
 
