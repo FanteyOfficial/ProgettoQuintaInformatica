@@ -56,10 +56,10 @@
                     if ($existingChatResult->num_rows > 0) {
                         // Chat already exists, activate the chat if it's not already active
                         $existingChatData = $existingChatResult->fetch_assoc();
-                        if ($existingChatData['statoChat'] !== 0) {
+                        if ($existingChatData['statoChat'] !== 1) {
                             $activateChatSql = "UPDATE Chat SET statoChat = ? WHERE id_chat = ?";
                             $activateChatStmt = $conn->prepare($activateChatSql);
-                            $activateChatStmt->bind_param("ii", 0, $existingChatData['id_chat']);
+                            $activateChatStmt->bind_param("ii", 1, $existingChatData['id_chat']);
                             $activateChatStmt->execute();
                             $activateChatStmt->close();
 
@@ -71,8 +71,8 @@
                         // Initialize a new chat between the current user and the added contact
                         $initializeChatSql = "INSERT INTO Chat (statoChat, partecipante1, partecipante2) VALUES (?, ?, ?)";
                         $initializeChatStmt = $conn->prepare($initializeChatSql);
-                        $chatState = "Active";  // You can set the initial chat state as needed
-                        $initializeChatStmt->bind_param("sii", $chatState, $_SESSION['id_utente'], $contactUserId);
+                        $chatState = 1;  // You can set the initial chat state as needed
+                        $initializeChatStmt->bind_param("iii", $chatState, $_SESSION['id_utente'], $contactUserId);
                         $initializeChatStmt->execute();
                         $initializeChatStmt->close();
 
@@ -85,7 +85,7 @@
                 $checkContactStmt->close();
                 $existingChatStmt->close(); */
             } catch (Exception $e) {
-                $resultMessage = "Errore durante l'inizializzazione della chat con il nuovo contatto.";
+                $resultMessage = "Errore durante l'inizializzazione della chat con il nuovo contatto.<br>" . $e->getMessage();
             }
         }
 
@@ -120,7 +120,7 @@
 
                     $updateChatSql = "UPDATE Chat SET statoChat = ? WHERE id_chat = ?";
                     $updateChatStmt = $conn->prepare($updateChatSql);
-                    $updateChatStmt->bind_param("ii", 1, $chatIdToUpdate);
+                    $updateChatStmt->bind_param("ii", 2, $chatIdToUpdate);
                     $updateChatStmt->execute();
                     $updateChatStmt->close();
 

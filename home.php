@@ -70,7 +70,7 @@
                         FROM Chat c
                         JOIN Utenti u1 ON c.partecipante1 = u1.id_utente
                         JOIN Utenti u2 ON c.partecipante2 = u2.id_utente
-                        WHERE (c.partecipante1 = ? OR c.partecipante2 = ?) AND c.statoChat = 0";
+                        WHERE (c.partecipante1 = ? OR c.partecipante2 = ?) AND c.statoChat = 1";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ii", $user_id, $user_id);
