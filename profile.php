@@ -47,7 +47,7 @@
                     // Contact username exists, check if a chat already exists
                     $contactUserId = $checkContactResult->fetch_assoc()['id_utente'];
 
-                    $existingChatSql = "SELECT id_chat FROM Chat WHERE (partecipante1 = ? AND partecipante2 = ?) OR (partecipante1 = ? AND partecipante2 = ?)";
+                    $existingChatSql = "SELECT id_chat, statoChat FROM Chat WHERE (partecipante1 = ? AND partecipante2 = ?) OR (partecipante1 = ? AND partecipante2 = ?)";
                     $existingChatStmt = $conn->prepare($existingChatSql);
                     $existingChatStmt->bind_param("iiii", $_SESSION['id_utente'], $contactUserId, $contactUserId, $_SESSION['id_utente']);
                     $existingChatStmt->execute();
@@ -56,10 +56,12 @@
                     if ($existingChatResult->num_rows > 0) {
                         // Chat already exists, activate the chat if it's not already active
                         $existingChatData = $existingChatResult->fetch_assoc();
+                        $statoChatValue = 1;
+
                         if ($existingChatData['statoChat'] !== 1) {
                             $activateChatSql = "UPDATE Chat SET statoChat = ? WHERE id_chat = ?";
                             $activateChatStmt = $conn->prepare($activateChatSql);
-                            $activateChatStmt->bind_param("ii", 1, $existingChatData['id_chat']);
+                            $activateChatStmt->bind_param("ii", $statoChatValue, $existingChatData['id_chat']);
                             $activateChatStmt->execute();
                             $activateChatStmt->close();
 
@@ -117,10 +119,11 @@
                     // Contact exists, update the Chat table to deactivate the chat
                     $contactData = $checkContactResult->fetch_assoc();
                     $chatIdToUpdate = $contactData['id_chat'];
+                    $statoChatValue = 2;
 
                     $updateChatSql = "UPDATE Chat SET statoChat = ? WHERE id_chat = ?";
                     $updateChatStmt = $conn->prepare($updateChatSql);
-                    $updateChatStmt->bind_param("ii", 2, $chatIdToUpdate);
+                    $updateChatStmt->bind_param("ii", $statoChatValue, $chatIdToUpdate);
                     $updateChatStmt->execute();
                     $updateChatStmt->close();
 
