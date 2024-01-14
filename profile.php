@@ -83,9 +83,9 @@
                 } else {
                     $resultMessage = "Errore: L'username del contatto non esiste.";
                 }
-                /* 
+                
                 $checkContactStmt->close();
-                $existingChatStmt->close(); */
+                $existingChatStmt->close();
             } catch (Exception $e) {
                 $resultMessage = "Errore durante l'inizializzazione della chat con il nuovo contatto.<br>" . $e->getMessage();
             }
