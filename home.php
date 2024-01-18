@@ -47,45 +47,73 @@
     <header>
         <a href="profile.php">Profilo utente</a>
         <form method="post" action="home.php">
-            <input type="text" name="search" placeholder="Cerca" autocomplete="off"/>
-            <input type="submit" value="🔍" />
+            <input type="text" name="search" placeholder="Cerca" autocomplete="off" id="searchBar" />
+            <input type="submit" value="🔍" id="searchBTN" />
         </form>
+
+        <script>
+            const searchInput = document.getElementById('searchBar');
+            const searchBTN = document.getElementById('searchBTN');
+
+            /* searchInput.addEventListener('input', () => {
+                const usernameToSearch = searchInput.value;
+                getUsers(usernameToSearch);
+            }); */
+
+            searchBTN.addEventListener('click', (e) => {
+                e.preventDefault();
+                const usernameToSearch = searchInput.value;
+                getUsers(usernameToSearch);
+            });
+        </script>
     </header>
 
     <main>
-        <div class="users">
+        <div class="users" id="users">
             <?php
                 $user_id = $_SESSION['id_utente'];
 
-                // get user username
-                $sql = "SELECT username FROM Utenti WHERE id_utente = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("i", $user_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $row = $result->fetch_assoc();
-                $username = $row['username'];
-
-                $sql = "SELECT c.id_chat, c.statoChat, c.partecipante1, c.partecipante2, u1.username AS username_partecipante1, u2.username AS username_partecipante2
-                        FROM Chat c
-                        JOIN Utenti u1 ON c.partecipante1 = u1.id_utente
-                        JOIN Utenti u2 ON c.partecipante2 = u2.id_utente
-                        WHERE (c.partecipante1 = ? OR c.partecipante2 = ?) AND c.statoChat = 1";
-
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ii", $user_id, $user_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                while ($row = $result->fetch_assoc()) {
-                    // Determine the username of the other participant
-                    $other_username = ($row['username_partecipante1'] == $username) ? $row['username_partecipante2'] : $row['username_partecipante1'];
-
-                    // Display the username and link to the chat
-                    echo '<a href="home.php?chat_id=' . $row['id_chat'] . '">' . $other_username . '</a>';
-                }
+                echo '<script>const userId = "' . $user_id . '";</script>';
             ?>
+
         </div>
+        <script>
+            function getUsers(usernameToSearch = '') {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'get_users_chats_api.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                if (usernameToSearch !== '') {
+                    xhr.send('user_id=' + userId + '&usernameToSearch=' + usernameToSearch);
+                } else {
+                    xhr.send('user_id=' + userId + '&usernameToSearch=' + '');
+                }
+                
+                xhr.onload = () => {
+                    if (xhr.status !== 200) {
+                        console.error('Error while fetching users');
+                        return;
+                    }
+                    // console.log(xhr.responseText);
+
+                    const users = JSON.parse(xhr.responseText);
+                    const usersContainer = document.getElementById('users');
+
+                    // Clear the users container
+                    usersContainer.innerHTML = '';
+
+                    // Display each user
+                    users.forEach(user => {
+                        const userElement = document.createElement('a');
+                        userElement.href = 'home.php?chat_id=' + user.id_chat;
+                        userElement.innerText = user.other_username;
+                        usersContainer.appendChild(userElement);
+                    });
+                };
+            }
+
+            // run script on page load
+            getUsers();
+        </script>
 
 
         <div class="chat-container">
