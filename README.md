@@ -36,7 +36,7 @@
 - [X] Eliminazione di una conversazione
 - [ ] Modifica di un messaggio inviato
 - [ ] Ricerca di uno o più messaggi attraverso una parola chiave
-- [ ] Ricerca di un contatto attraverso una parola chiave
+- [X] Ricerca di un contatto attraverso una parola chiave
 - [X] Visualizzazione dei messaggi inviati e ricevuti dall'utente
 - [ ] Recupero password
 - [ ] Visualizzazione da parte del mittente se il destinatario ha visualizzato il messaggio

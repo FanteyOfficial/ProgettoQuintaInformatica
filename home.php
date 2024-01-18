@@ -46,8 +46,9 @@
 <body>
     <header>
         <a href="profile.php">Profilo utente</a>
-        <form method="post" action="home.php">
-            <input type="text" name="search" placeholder="Cerca" autocomplete="off" id="searchBar" />
+        <form method="post" action="home.php" autocomplete="off">
+            <input autocomplete="false" name="hidden" type="text" style="display:none;">
+            <input type="text" name="search" placeholder="Cerca" id="searchBar" />
             <input type="submit" value="🔍" id="searchBTN" />
         </form>
 
@@ -55,10 +56,10 @@
             const searchInput = document.getElementById('searchBar');
             const searchBTN = document.getElementById('searchBTN');
 
-            /* searchInput.addEventListener('input', () => {
+            searchInput.addEventListener('input', () => {
                 const usernameToSearch = searchInput.value;
                 getUsers(usernameToSearch);
-            }); */
+            });
 
             searchBTN.addEventListener('click', (e) => {
                 e.preventDefault();
