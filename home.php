@@ -77,44 +77,45 @@
                 echo '<script>const userId = "' . $user_id . '";</script>';
             ?>
 
-        </div>
-        <script>
-            function getUsers(usernameToSearch = '') {
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'get_users_chats_api.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                if (usernameToSearch !== '') {
-                    xhr.send('user_id=' + userId + '&usernameToSearch=' + usernameToSearch);
-                } else {
-                    xhr.send('user_id=' + userId + '&usernameToSearch=' + '');
-                }
-                
-                xhr.onload = () => {
-                    if (xhr.status !== 200) {
-                        console.error('Error while fetching users');
-                        return;
+            <script>
+                function getUsers(usernameToSearch = '') {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'get_users_chats_api.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    if (usernameToSearch !== '') {
+                        xhr.send('user_id=' + userId + '&usernameToSearch=' + usernameToSearch);
+                    } else {
+                        xhr.send('user_id=' + userId + '&usernameToSearch=' + '');
                     }
-                    // console.log(xhr.responseText);
+                    
+                    xhr.onload = () => {
+                        if (xhr.status !== 200) {
+                            console.error('Error while fetching users');
+                            return;
+                        }
+                        // console.log(xhr.responseText);
 
-                    const users = JSON.parse(xhr.responseText);
-                    const usersContainer = document.getElementById('users');
+                        const users = JSON.parse(xhr.responseText);
+                        const usersContainer = document.getElementById('users');
 
-                    // Clear the users container
-                    usersContainer.innerHTML = '';
+                        // Clear the users container
+                        usersContainer.innerHTML = '';
 
-                    // Display each user
-                    users.forEach(user => {
-                        const userElement = document.createElement('a');
-                        userElement.href = 'home.php?chat_id=' + user.id_chat;
-                        userElement.innerText = user.other_username;
-                        usersContainer.appendChild(userElement);
-                    });
-                };
-            }
+                        // Display each user
+                        users.forEach(user => {
+                            const userElement = document.createElement('a');
+                            userElement.classList.add('user-link');
+                            userElement.href = 'home.php?chat_id=' + user.id_chat;
+                            userElement.innerText = user.other_username;
+                            usersContainer.appendChild(userElement);
+                        });
+                    };
+                }
 
-            // run script on page load
-            getUsers();
-        </script>
+                // run script on page load
+                getUsers();
+            </script>
+        </div>
 
 
         <div class="chat-container">
@@ -173,14 +174,14 @@
                         // Check if the form is submitted
                         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
                             try {
-                                $messageContent = $_POST['message'];
+                                $messageContent = strip_tags($_POST['message']);
                                 $currentUserId = $_SESSION['id_utente'];
 
                                 // Insert the new message into the database
                                 $insertMessageSql = "INSERT INTO Messaggi (utente_id, contenuto, ora_invio, letto, consegnato, chat_id, tipo) 
                                                     VALUES (?, ?, CURRENT_TIMESTAMP, 0, 0, ?, 1)"; // Assuming tipo 1 is a text message
                                 $insertMessageStmt = $conn->prepare($insertMessageSql);
-                                $insertMessageStmt->bind_param("isi", $currentUserId, strip_tags($messageContent), $currentChatId);
+                                $insertMessageStmt->bind_param("isi", $currentUserId, $messageContent, $currentChatId);
                                 $insertMessageStmt->execute();
                                 $insertMessageStmt->close();
 
@@ -192,6 +193,7 @@
                             }
                         }
 
+                        // If no redirection happened, proceed with fetching and displaying messages
                         // Fetch and display messages
                         $sqlMessages = "SELECT m.utente_id, m.contenuto, m.ora_invio, u.username
                                         FROM Messaggi m
