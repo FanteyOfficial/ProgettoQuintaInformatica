@@ -3,8 +3,8 @@
 
     $user_id = $_POST['user_id'];
     $usernameToSearch = "";
-    if ($_POST['usernameToSearch'] != "") {
-        $usernameToSearch = $_POST['usernameToSearch'];
+    if (strip_tags($_POST['usernameToSearch']) != "") {
+        $usernameToSearch = strip_tags($_POST['usernameToSearch']);
     }
 
     // get user username
