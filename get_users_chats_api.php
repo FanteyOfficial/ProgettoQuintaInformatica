@@ -50,11 +50,6 @@
     while ($row = $result->fetch_assoc()) {
         // Determine the username of the other participant
         $other_username = ($row['username_partecipante1'] == $username) ? $row['username_partecipante2'] : $row['username_partecipante1'];
-        
-        // check if the other username contains the letters searched
-        if ($usernameToSearch != "" && !strpos($other_username, $usernameToSearch) === false) {
-            continue;
-        }
 
         // check if the other username contains the letters searched (not case insensitive)
         if ($usernameToSearch != "" && stripos($other_username, $usernameToSearch) === false) {
