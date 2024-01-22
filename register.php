@@ -2,11 +2,11 @@
 include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $mail = $_POST['mail'];
-    $nome = $_POST['nome'];
-    $cognome = $_POST['cognome'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $mail = strip_tags($_POST['mail']);
+    $nome = strip_tags($_POST['nome']);
+    $cognome = strip_tags($_POST['cognome']);
+    $username = strip_tags($_POST['username']);
+    $password = strip_tags($_POST['password']);
 
     if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
         $failed = "Invalid email format.";
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stato = 1;
 
-    $stmt->bind_param("ssssiss", strip_tags($mail), strip_tags($nome), strip_tags($cognome), strip_tags($username), $stato, $hashedPassword, $salt);
+    $stmt->bind_param("ssssiss", $mail, $nome, $cognome, $username, $stato, $hashedPassword, $salt);
 
     if ($stmt->execute()) {
         header("Location: login.php");

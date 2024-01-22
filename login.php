@@ -9,8 +9,8 @@ if (isset($_SESSION['id_utente'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $mail = $_POST['mail'];
-    $password = $_POST['password'];
+    $mail = strip_tags($_POST['mail']);
+    $password = strip_tags($_POST['password']);
 
     $sql = "SELECT id_utente, password, salt FROM utenti WHERE mail = ?";
     $stmt = $conn->prepare($sql);

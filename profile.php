@@ -14,15 +14,15 @@
         // Update user data if form is submitted
         if (isset($_POST['update_user'])) {
             try {
-                $newNome = $_POST['new_nome'];
-                $newCognome = $_POST['new_cognome'];
-                $newUsername = $_POST['new_username'];
-                $newEmail = $_POST['new_email'];
+                $newNome = strip_tags($_POST['new_nome']);
+                $newCognome = strip_tags($_POST['new_cognome']);
+                $newUsername = strip_tags($_POST['new_username']);
+                $newEmail = strip_tags($_POST['new_email']);
 
                 // Update user data in the database
                 $updateUserDataSql = "UPDATE Utenti SET nome = ?, cognome = ?, username = ?, mail = ? WHERE id_utente = ?";
                 $updateUserDataStmt = $conn->prepare($updateUserDataSql);
-                $updateUserDataStmt->bind_param("ssssi", strip_tags($newNome), strip_tags($newCognome), strip_tags($newUsername), strip_tags($newEmail), $_SESSION['id_utente']);
+                $updateUserDataStmt->bind_param("ssssi", $newNome, $newCognome, $newUsername, $newEmail, $_SESSION['id_utente']);
                 $updateUserDataStmt->execute();
                 $updateUserDataStmt->close();
                 $resultMessage = "Dati aggiornati con successo!";

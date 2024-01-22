@@ -19,6 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deactivateUserStmt->execute();
     $deactivateUserStmt->close();
 
+    // deactivate all chats associated
+    $deactivateChatsSql = "UPDATE Chat SET statoChat = 3 WHERE partecipante1 = ? OR partecipante2 = ?";
+    $deactivateChatsStmt = $conn->prepare($deactivateChatsSql);
+    $deactivateChatsStmt->bind_param("ii", $userId, $userId);
+    $deactivateChatsStmt->execute();
+    $deactivateChatsStmt->close();
+
     // Clear remember me token and expire the remember me cookie
     if (isset($_COOKIE['remember_me'])) {
         $token = $_COOKIE['remember_me'];
