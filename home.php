@@ -106,6 +106,9 @@
                             const userElement = document.createElement('a');
                             userElement.classList.add('user-link');
                             userElement.href = 'home.php?chat_id=' + user.id_chat;
+                            userElement.addEventListener('click', () => {
+                                getMessages(user.id_chat, user.other_username);
+                            });
                             userElement.innerText = user.other_username;
                             usersContainer.appendChild(userElement);
                         });
@@ -120,105 +123,129 @@
 
         <div class="chat-container">
             <?php
-                // Check if a specific chat is selected
-                $currentChatId = isset($_GET['chat_id']) ? intval($_GET['chat_id']) : 0;
+                // check if the chat is selected and get the chat id with GET
+                if (isset($_GET['chat_id'])) {
+                    $currentChatId = $_GET['chat_id'];
+                } else {
+                    $currentChatId = -1;
+                }
 
-                if ($currentChatId > 0) {
-                    // Fetch and display messages for the selected chat
-                    $sqlMessages = "SELECT m.utente_id, m.contenuto, m.ora_invio, u.username AS author_username
-                                    FROM Messaggi m
-                                    JOIN Utenti u ON m.utente_id = u.id_utente
-                                    WHERE m.chat_id = ?
-                                    ORDER BY m.ora_invio ASC";
-                    $stmtMessages = $conn->prepare($sqlMessages);
-                    $stmtMessages->bind_param("i", $currentChatId);
-                    $stmtMessages->execute();
-                    $resultMessages = $stmtMessages->get_result();
+                echo '<script>const currentChatId = "' . $currentChatId . '";</script>';
             ?>
+            <script>
+                function getMessages(chatId, other_username="") {
+                    event.preventDefault();
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'get_messages_api.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send('chat_id=' + chatId);
+                    
+                    xhr.onload = () => {
+                        if (xhr.status !== 200) {
+                            console.error('Error while fetching messages');
+                            return;
+                        }
+                        // console.log(xhr.responseText);
+
+                        const messages = JSON.parse(xhr.responseText);
+                        const messagesContainer = document.getElementById('messages');
+
+                        // Clear the messages container
+                        messagesContainer.innerHTML = '';
+
+                        // Display the chat name
+                        const chatNameElement = document.querySelector('.chat-name');
+                        chatNameElement.innerText = other_username;
+
+                        // Display each message if there are any
+                        if (messages.length > 0) {
+                            messages.forEach(msg => {
+                                const messageElement = document.createElement('div');
+                                messageElement.classList.add('message');
+                                messageElement.innerHTML = `
+                                    <p class="message-author">${msg.username}</p>
+                                    <p class="message-content">${msg.contenuto}</p>
+                                    <p class="message-time">${msg.ora_invio}</p>
+                                `;
+                                messagesContainer.appendChild(messageElement);
+                            });
+
+                            // Scroll to the bottom of the messages container
+                            // messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                            // show the message input if it's not already shown
+                            if (document.getElementById('message-input').childElementCount == 1){
+                                const messageInput = document.getElementById('message-input');
+                                formElement = document.createElement('form');
+                                formElement.method = 'post';
+                                formElement.action = '';
+                                inputElement = document.createElement('input');
+                                inputElement.type = 'text';
+                                inputElement.id = 'message';
+                                inputElement.placeholder = 'Scrivi un messaggio';
+                                submitElement = document.createElement('input');
+                                submitElement.type = 'submit';
+                                submitElement.value = 'Invia';
+                                submitElement.addEventListener('click', () => {
+                                    sendMessage(chatId, userId);
+                                });
+                                formElement.appendChild(inputElement);
+                                formElement.appendChild(submitElement);
+                                messageInput.appendChild(formElement);
+                            }
+                        } else {
+                            const noMessagesElement = document.getElementById('messages');
+                            noMessagesElement.innerHTML = '<p class="no-messages">Non ci sono messaggi</p>';
+                        }
+                    };
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    const noMessagesElement = document.getElementById('messages');
+                    noMessagesElement.innerHTML = 'Nessuna chat selezionata';
+                });
+            </script>
             <div class="chat">
                 <div class="chat-header">
-                    <p class="chat-name">Chat <?php echo $currentChatId; ?></p>
+                    <p class="chat-name"></p>
                 </div>
-                <div class="messages">
-                    <?php
-                        while ($messageRow = $resultMessages->fetch_assoc()) {
-                            $messageAuthor = $messageRow['author_username'];
-                            $messageContent = $messageRow['contenuto'];
-                            $messageTimestamp = $messageRow['ora_invio'];
+                <div class="messages" id="messages"></div>
+                <div class="message-input" id="message-input">
+                    <script>
+                        function sendMessage(chatId, userId) {
+                            event.preventDefault();
+                            
+                            const message = document.getElementById('message').value;
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'send_message_api.php', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.send('chat_id=' + chatId + '&user_id=' + userId + '&message=' + message);
 
-                            $isCurrentUser = ($messageAuthor === $username);
+                            xhr.onload = () => {
+                                if (xhr.status !== 200) {
+                                    console.error('Error while sending message');
+                                    return;
+                                }
+                                // console.log(xhr.responseText);
 
-                            // Message structure based on sender/receiver
-                            if ($isCurrentUser) {
-                                echo '<div class="msg">
-                                        <div class="message-text-sender">
-                                            <p class="msg-author">Tu</p>
-                                            <p class="msg-content">' . $messageContent . '</p>
-                                            <p class="msg-timestamp">' . $messageTimestamp . '</p>
-                                        </div>
-                                    </div>';
-                            } else {
-                                echo '<div class="msg">
-                                        <div class="message-text-receiver">
-                                            <p class="msg-author">' . $messageAuthor . '</p>
-                                            <p class="msg-content">' . $messageContent . '</p>
-                                            <p class="msg-timestamp">' . $messageTimestamp . '</p>
-                                        </div>
-                                    </div>';
-                            }
+                                const response = JSON.parse(xhr.responseText);
+                                if (response.success) {
+                                    // Clear the message input
+                                    document.getElementById('message').value = '';
+
+                                    // Reload the messages
+                                    getMessages(chatId);
+                                }
+                            };
+
+                            xhr.onerror = () => {
+                                console.error('Error while sending message');
+                            };
                         }
-                    ?>
-                </div>
-                <div class="message-input">
-                    <?php
-                        // Check if the form is submitted
-                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
-                            try {
-                                $messageContent = strip_tags($_POST['message']);
-                                $currentUserId = $_SESSION['id_utente'];
-
-                                // Insert the new message into the database
-                                $insertMessageSql = "INSERT INTO Messaggi (utente_id, contenuto, ora_invio, letto, consegnato, chat_id, tipo) 
-                                                    VALUES (?, ?, CURRENT_TIMESTAMP, 0, 0, ?, 1)"; // Assuming tipo 1 is a text message
-                                $insertMessageStmt = $conn->prepare($insertMessageSql);
-                                $insertMessageStmt->bind_param("isi", $currentUserId, $messageContent, $currentChatId);
-                                $insertMessageStmt->execute();
-                                $insertMessageStmt->close();
-
-                                // Redirect to avoid form resubmission on page refresh
-                                header("Location: home.php?chat_id=$currentChatId");
-                                exit();
-                            } catch (Exception $e) {
-                                echo "Error sending message: " . $e->getMessage();
-                            }
-                        }
-
-                        // If no redirection happened, proceed with fetching and displaying messages
-                        // Fetch and display messages
-                        $sqlMessages = "SELECT m.utente_id, m.contenuto, m.ora_invio, u.username
-                                        FROM Messaggi m
-                                        JOIN Utenti u ON m.utente_id = u.id_utente
-                                        WHERE m.chat_id = ?
-                                        ORDER BY m.ora_invio ASC";
-                        $stmtMessages = $conn->prepare($sqlMessages);
-                        $stmtMessages->bind_param("i", $currentChatId);
-                        $stmtMessages->execute();
-                        $resultMessages = $stmtMessages->get_result();
-                    ?>
-
-                    <form method="post" action="home.php?chat_id=<?php echo $currentChatId; ?>" >
-                        <input type="text" name="message" placeholder="Scrivi un messaggio" />
-                        <input type="submit" value="Invia" />
-                    </form>
+                    </script>
                 </div>
             </div>
-
-            <?php
-                } else {
-                    // Display a default message or instructions when no chat is selected
-                    echo '<p>Select a chat to view messages.</p>';
-                }
-            ?>
         </div>
     </main>
 </body>
