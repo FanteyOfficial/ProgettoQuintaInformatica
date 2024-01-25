@@ -14,7 +14,7 @@
         $stmtMessages->execute();
         $resultMessages = $stmtMessages->get_result();
 
-        $rows = array('success' => true);
+        $rows = array('success' => true, 'chat_id' => $chat_id, 'user_id' => $user_id, 'message' => $message);
     }
     else {
         $rows = array('success' => false);

@@ -216,8 +216,6 @@
                 }
 
                 function deleteMessage(messageId) {
-                    event.preventDefault();
-
                     const xhr = new XMLHttpRequest();
                     xhr.open('POST', 'delete_message_api.php', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -229,18 +227,14 @@
                             return;
                         }
 
-                        try {
-                            const response = JSON.parse(xhr.responseText);
+                        const response = JSON.parse(xhr.responseText);
 
-                            if (response.success) {
-                                // Reload the messages
-                                getMessages(currentChatId);
-                            } else {
-                                console.error('Error in server response:', response.error);
-                                // Handle the error or provide a user-friendly message
-                            }
-                        } catch (error) {
-                            console.error('Error parsing JSON response:', error);
+                        if (response.success) {
+                            // Reload the messages
+                            const other_username = document.querySelector('.chat-name').innerText;
+                            getMessages(response.message_id, other_username);
+                        } else {
+                            console.error('Error in server response:', response.error);
                             // Handle the error or provide a user-friendly message
                         }
                     };
@@ -287,7 +281,9 @@
                                     document.getElementById('message').value = '';
 
                                     // Reload the messages
-                                    getMessages(chatId);
+                                    const other_username = document.querySelector('.chat-name').innerText;
+
+                                    getMessages(response.chat_id, other_username);
                                 }
                             };
 
