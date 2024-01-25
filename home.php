@@ -109,25 +109,22 @@
                             userElement.href = 'home.php?chat_id=' + user.id_chat;
                             userElement.addEventListener('click', () => {
                                 getMessages(user.id_chat, user.other_username);
-                                var pollingInterval = setInterval(() => {pollFunction(user);}, 1000);
+                                //var pollingInterval = setInterval(() => {pollFunction(user);}, 1000);
                             });
                             userElement.innerText = user.other_username;
                             usersContainer.appendChild(userElement);
                         });
 
                         // Function to be executed every second
-                        function pollFunction(userData) {
+                        /* function pollFunction(userData) {
                             // Your polling logic goes here
                             console.log('Polling...');
                             
                             if (userData.id_chat) {
                                 console.log("aggiorno");
-                                getMessages(userData.id_chat, user.other_username);
+                                getMessages(userData.id_chat, userData.other_username);
                             }
-                        }
-
-                        // Call the pollFunction every second (1000 milliseconds)
-                        
+                        } */
                     };
                 }
 
@@ -149,7 +146,7 @@
                 echo '<script>const currentChatId = "' . $currentChatId . '";</script>';
             ?>
             <script>
-                function getMessages(chatId, other_username="") {
+                function getMessages(chatId, other_username) {
                     event.preventDefault();
 
                     const xhr = new XMLHttpRequest();
