@@ -105,13 +105,29 @@
                         users.forEach(user => {
                             const userElement = document.createElement('a');
                             userElement.classList.add('user-link');
+                            userElement.id = 'user-link';
                             userElement.href = 'home.php?chat_id=' + user.id_chat;
                             userElement.addEventListener('click', () => {
                                 getMessages(user.id_chat, user.other_username);
+                                var pollingInterval = setInterval(() => {pollFunction(user);}, 1000);
                             });
                             userElement.innerText = user.other_username;
                             usersContainer.appendChild(userElement);
                         });
+
+                        // Function to be executed every second
+                        function pollFunction(userData) {
+                            // Your polling logic goes here
+                            console.log('Polling...');
+                            
+                            if (userData.id_chat) {
+                                console.log("aggiorno");
+                                getMessages(userData.id_chat, user.other_username);
+                            }
+                        }
+
+                        // Call the pollFunction every second (1000 milliseconds)
+                        
                     };
                 }
 
