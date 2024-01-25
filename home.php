@@ -202,8 +202,10 @@
                 }
 
                 document.addEventListener('DOMContentLoaded', () => {
-                    const noMessagesElement = document.getElementById('messages');
-                    noMessagesElement.innerHTML = 'Nessuna chat selezionata';
+                    if (currentChatId == -1) {
+                        const noChatSelectedElement = document.getElementById('messages');
+                        noChatSelectedElement.innerHTML = 'Nessuna chat selezionata';
+                    }
                 });
             </script>
             <div class="chat">
