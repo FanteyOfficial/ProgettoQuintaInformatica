@@ -5,7 +5,7 @@
 
     if ($chat_id > 0) {
         // Fetch and display messages for the selected chat
-        $sqlMessages = "SELECT m.utente_id, m.contenuto, m.ora_invio, u.username AS author_username
+        $sqlMessages = "SELECT m.id_messaggio, m.utente_id, m.contenuto, m.ora_invio, u.username AS author_username
                         FROM Messaggi m
                         JOIN Utenti u ON m.utente_id = u.id_utente
                         WHERE m.chat_id = ?
@@ -24,7 +24,8 @@
                 'utente_id' => $row['utente_id'], 
                 'contenuto' => $row['contenuto'],
                 'ora_invio' => $row['ora_invio'],
-                'username' => $row['author_username']
+                'username' => $row['author_username'],
+                'id_messaggio' => $row['id_messaggio']
         );
     }
     

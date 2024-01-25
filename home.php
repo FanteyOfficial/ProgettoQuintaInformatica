@@ -168,18 +168,36 @@
                                     <p class="message-content">${msg.contenuto}</p>
                                     <p class="message-time">${msg.ora_invio}</p>
                                 `;
+
+                                // Display the delete button if the message is from the current user
+                                if (msg.utente_id == userId) {
+                                    const deleteButton = document.createElement('button');
+                                    deleteButton.classList.add('delete-button');
+                                    deleteButton.innerText = '🗑️';
+                                    deleteButton.addEventListener('click', () => {
+                                        deleteMessage(msg.id_messaggio);
+                                    });
+                                    messageElement.appendChild(deleteButton);
+                                }
+                                
                                 messagesContainer.appendChild(messageElement);
                             });
 
                             // Scroll to the bottom of the messages container
                             // messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                            // show the message input if it's not already shown
-                            if (document.getElementById('message-input').childElementCount == 1){
+                        } else {
+                            const noMessagesElement = document.getElementById('messages');
+                            noMessagesElement.innerHTML = '<p class="no-messages">Non ci sono messaggi</p>';
+                        }
+
+                        // show the message input if it's not already shown
+                        if (document.getElementById('message-input').childElementCount == 1){
                                 const messageInput = document.getElementById('message-input');
                                 formElement = document.createElement('form');
                                 formElement.method = 'post';
                                 formElement.action = '';
+                                formElement.autocomplete = 'off';
                                 inputElement = document.createElement('input');
                                 inputElement.type = 'text';
                                 inputElement.id = 'message';
@@ -194,12 +212,44 @@
                                 formElement.appendChild(submitElement);
                                 messageInput.appendChild(formElement);
                             }
-                        } else {
-                            const noMessagesElement = document.getElementById('messages');
-                            noMessagesElement.innerHTML = '<p class="no-messages">Non ci sono messaggi</p>';
-                        }
                     };
                 }
+
+                function deleteMessage(messageId) {
+                    event.preventDefault();
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'delete_message_api.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send('message_id=' + messageId);
+
+                    xhr.onload = () => {
+                        if (xhr.status !== 200) {
+                            console.error('Error while deleting message. Status:', xhr.status);
+                            return;
+                        }
+
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+
+                            if (response.success) {
+                                // Reload the messages
+                                getMessages(currentChatId);
+                            } else {
+                                console.error('Error in server response:', response.error);
+                                // Handle the error or provide a user-friendly message
+                            }
+                        } catch (error) {
+                            console.error('Error parsing JSON response:', error);
+                            // Handle the error or provide a user-friendly message
+                        }
+                    };
+
+                    xhr.onerror = () => {
+                        console.error('Error while deleting message');
+                    };
+                }
+
 
                 document.addEventListener('DOMContentLoaded', () => {
                     if (currentChatId == -1) {
