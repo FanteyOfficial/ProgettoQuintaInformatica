@@ -32,14 +32,12 @@
 - [ ] Eliminazione di un account utente ***(da sistemare)***
 - [X] Visualizzazione utenti con cui poter interagire
 - [X] Invio messaggi a un altro utente
-- [ ] Eliminazione di un messaggio dalla conversazione
+- [X] Eliminazione di un messaggio dalla conversazione
 - [X] Eliminazione di una conversazione
 - [ ] Modifica di un messaggio inviato
 - [ ] Ricerca di uno o più messaggi attraverso una parola chiave
 - [X] Ricerca di un contatto attraverso una parola chiave
 - [X] Visualizzazione dei messaggi inviati e ricevuti dall'utente
-- [ ] Recupero password
-- [ ] Visualizzazione da parte del mittente se il destinatario ha visualizzato il messaggio
 - [X] Visualizzazione orario di invio del messaggio
 - [ ] Visualizzazione stato online o ultimo accesso dell'utente
 - [ ] Invio di diverse tipologie di messaggio (testuale, immagine o documento)
