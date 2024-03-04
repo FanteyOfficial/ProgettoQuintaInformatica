@@ -45,6 +45,7 @@
 
     <script src="./js/messages_management.js"></script>
     <script src="./js/users_management.js"></script>
+    <script src="./js/home_events.js"></script>
 </head>
 <body>
     <header>
@@ -54,22 +55,6 @@
             <input type="text" name="search" placeholder="Cerca" id="searchBar" />
             <input type="submit" value="🔍" id="searchBTN" />
         </form>
-
-        <script>
-            const searchInput = document.getElementById('searchBar');
-            const searchBTN = document.getElementById('searchBTN');
-
-            searchInput.addEventListener('input', () => {
-                const usernameToSearch = searchInput.value;
-                getUsers(usernameToSearch);
-            });
-
-            searchBTN.addEventListener('click', (e) => {
-                e.preventDefault();
-                const usernameToSearch = searchInput.value;
-                getUsers(usernameToSearch);
-            });
-        </script>
     </header>
 
     <main>
@@ -98,14 +83,6 @@
 
                 echo '<script>const currentChatId = "' . $currentChatId . '";</script>';
             ?>
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    if (currentChatId == -1) {
-                        const noChatSelectedElement = document.getElementById('messages');
-                        noChatSelectedElement.innerHTML = 'Nessuna chat selezionata';
-                    }
-                });
-            </script>
             <div class="chat">
                 <div class="chat-header">
                     <p class="chat-name"></p>
