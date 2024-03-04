@@ -13,7 +13,7 @@ function getMessages(chatId, other_username) {
     event.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'get_messages_api.php', true);
+    xhr.open('POST', '../php_apis/get_messages_api.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('chat_id=' + chatId);
     
