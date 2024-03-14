@@ -1,6 +1,6 @@
-function getUsers(usernameToSearch = '') {
+function getUsers(userId, usernameToSearch = '') {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'get_users_chats_api.php', true);
+    xhr.open('POST', '../get_users_chats_api.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     if (usernameToSearch !== '') {
         xhr.send('user_id=' + userId + '&usernameToSearch=' + usernameToSearch);
@@ -26,7 +26,6 @@ function getUsers(usernameToSearch = '') {
             const userElement = document.createElement('a');
             userElement.classList.add('user-link');
             userElement.id = 'user-link';
-            userElement.href = 'home.php?chat_id=' + user.id_chat;
             userElement.addEventListener('click', () => {
                 getMessages(user.id_chat, user.other_username);
             });

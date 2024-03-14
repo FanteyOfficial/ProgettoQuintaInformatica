@@ -13,7 +13,7 @@ function getMessages(chatId, other_username) {
     event.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '../php_apis/get_messages_api.php', true);
+    xhr.open('POST', '../get_messages_api.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('chat_id=' + chatId);
     
@@ -87,7 +87,7 @@ function getMessages(chatId, other_username) {
 
 function deleteMessage(messageId) {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'delete_message_api.php', true);
+    xhr.open('POST', '../delete_message_api.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('message_id=' + messageId);
 
@@ -119,7 +119,7 @@ function sendMessage(chatId, userId) {
     
     const message = document.getElementById('message').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'send_message_api.php', true);
+    xhr.open('POST', '../send_message_api.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('chat_id=' + chatId + '&user_id=' + userId + '&message=' + message);
 
